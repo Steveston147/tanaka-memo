@@ -76,6 +76,9 @@ export default function Home() {
   const [memos, setMemos] = useState<TanakaMemo[]>([]);
   const [error, setError] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editForm, setEditForm] = useState(initialForm);
+  const [editError, setEditError] = useState("");
 
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
@@ -135,7 +138,55 @@ export default function Home() {
 
     if (shouldDelete) {
       setMemos((current) => current.filter((item) => item.id !== memo.id));
+      if (editingId === memo.id) {
+        setEditingId(null);
+        setEditError("");
+      }
     }
+  };
+
+  const startEditing = (memo: TanakaMemo) => {
+    setEditingId(memo.id);
+    setEditForm({
+      title: memo.title,
+      description: memo.description,
+      category: memo.category,
+      priority: memo.priority,
+    });
+    setEditError("");
+  };
+
+  const cancelEditing = () => {
+    setEditingId(null);
+    setEditForm(initialForm);
+    setEditError("");
+  };
+
+  const handleEditSubmit = (event: FormEvent<HTMLFormElement>, memoId: string) => {
+    event.preventDefault();
+
+    const title = editForm.title.trim();
+    const description = editForm.description.trim();
+
+    if (!title) {
+      setEditError("タイトルを入力してください。");
+      return;
+    }
+
+    setMemos((current) =>
+      current.map((memo) =>
+        memo.id === memoId
+          ? {
+              ...memo,
+              title,
+              description,
+              category: editForm.category,
+              priority: editForm.priority,
+            }
+          : memo,
+      ),
+    );
+    cancelEditing();
   };
 
   return (
@@ -269,20 +320,120 @@ export default function Home() {
                           </span>
                         </div>
                       </div>
-                      <button
-                        type="button"
-                        onClick={() => handleDelete(memo)}
-                        className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-200"
-                      >
-                        削除
-                      </button>
+                      <div className="flex gap-2">
+                        <button
+                          type="button"
+                          onClick={() => startEditing(memo)}
+                          disabled={editingId === memo.id}
+                          className="rounded-lg border border-blue-300 px-3 py-2 text-sm font-medium text-blue-700 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-200 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          編集
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDelete(memo)}
+                          className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                        >
+                          削除
+                        </button>
+                      </div>
                     </div>
-                    {memo.description ? (
-                      <p className="mt-4 whitespace-pre-wrap text-sm leading-6 text-slate-700">{memo.description}</p>
+                    {editingId === memo.id ? (
+                      <form className="mt-5 space-y-4 border-t border-slate-200 pt-5" onSubmit={(event) => handleEditSubmit(event, memo.id)}>
+                        <div>
+                          <label htmlFor={`edit-title-${memo.id}`} className="block text-sm font-medium text-slate-700">
+                            タイトル <span className="text-red-600">必須</span>
+                          </label>
+                          <input
+                            id={`edit-title-${memo.id}`}
+                            autoFocus
+                            value={editForm.title}
+                            onChange={(event) => setEditForm((current) => ({ ...current, title: event.target.value }))}
+                            className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 text-slate-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                          />
+                        </div>
+
+                        <div>
+                          <label htmlFor={`edit-description-${memo.id}`} className="block text-sm font-medium text-slate-700">
+                            詳細メモ
+                          </label>
+                          <textarea
+                            id={`edit-description-${memo.id}`}
+                            value={editForm.description}
+                            onChange={(event) => setEditForm((current) => ({ ...current, description: event.target.value }))}
+                            rows={5}
+                            className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 text-slate-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                          />
+                        </div>
+
+                        <div className="grid gap-4 sm:grid-cols-2">
+                          <div>
+                            <label htmlFor={`edit-category-${memo.id}`} className="block text-sm font-medium text-slate-700">
+                              カテゴリー
+                            </label>
+                            <select
+                              id={`edit-category-${memo.id}`}
+                              value={editForm.category}
+                              onChange={(event) =>
+                                setEditForm((current) => ({ ...current, category: event.target.value as MemoCategory }))
+                              }
+                              className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-slate-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                            >
+                              <option value="idea">idea</option>
+                              <option value="feature">feature</option>
+                              <option value="improvement">improvement</option>
+                              <option value="bug">bug</option>
+                            </select>
+                          </div>
+
+                          <div>
+                            <label htmlFor={`edit-priority-${memo.id}`} className="block text-sm font-medium text-slate-700">
+                              優先度
+                            </label>
+                            <select
+                              id={`edit-priority-${memo.id}`}
+                              value={editForm.priority}
+                              onChange={(event) =>
+                                setEditForm((current) => ({ ...current, priority: event.target.value as MemoPriority }))
+                              }
+                              className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-slate-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                            >
+                              <option value="normal">通常</option>
+                              <option value="high">高</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        {editError ? (
+                          <p className="rounded-lg bg-red-100 px-3 py-2 text-sm text-red-700">{editError}</p>
+                        ) : null}
+
+                        <div className="flex justify-end gap-3">
+                          <button
+                            type="button"
+                            onClick={cancelEditing}
+                            className="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                          >
+                            キャンセル
+                          </button>
+                          <button
+                            type="submit"
+                            className="rounded-lg bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2"
+                          >
+                            変更を保存
+                          </button>
+                        </div>
+                      </form>
                     ) : (
-                      <p className="mt-4 text-sm text-slate-400">詳細メモはありません</p>
+                      <>
+                        {memo.description ? (
+                          <p className="mt-4 whitespace-pre-wrap text-sm leading-6 text-slate-700">{memo.description}</p>
+                        ) : (
+                          <p className="mt-4 text-sm text-slate-400">詳細メモはありません</p>
+                        )}
+                        <p className="mt-4 text-xs text-slate-500">登録日時：{formatCreatedAt(memo.createdAt)}</p>
+                      </>
                     )}
-                    <p className="mt-4 text-xs text-slate-500">登録日時：{formatCreatedAt(memo.createdAt)}</p>
                   </article>
                 ))
               )}
