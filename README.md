@@ -1,2 +1,28 @@
-# tanaka-memo
-A small personal backlog app for recording workplace problems and development ideas.
+# 田中メモ
+
+仕事中に感じた不便、改善案、不具合、開発アイデアをすぐ記録するための個人用Webアプリです。
+
+## 機能
+
+- タイトル、詳細メモ、カテゴリー、優先度を入力してメモを登録
+- ブラウザのlocalStorageにメモを保存
+- 新しいメモを一覧の最上部に表示
+- 登録済みメモの削除前に確認ダイアログを表示
+- 高優先度メモを視覚的に強調
+- PCとスマートフォンに対応したレスポンシブUI
+
+## 開発
+
+```bash
+npm install
+npm run dev
+```
+
+ブラウザで `http://localhost:3000` を開いて確認します。
+
+## 確認コマンド
+
+```bash
+npm run lint
+npm run build
+```
