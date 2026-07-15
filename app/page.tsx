@@ -73,7 +73,7 @@ export default function Home() {
 
   return <main className="app-shell min-h-screen pb-20">
     <header className="glass sticky top-0 z-30 border-b border-slate-200/80"><div className="mx-auto flex h-16 max-w-[1480px] items-center justify-between px-4 sm:px-7">
-      <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 to-sky-500 text-white shadow-lg shadow-indigo-200"><Icon name="spark" /></div><div><h1 className="text-[17px] font-bold tracking-tight text-slate-900">田中メモ</h1><p className="text-[11px] font-medium tracking-wide text-slate-400">IDEAS INTO ACTION</p></div></div>
+      <div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 to-sky-500 text-white shadow-lg shadow-indigo-200"><Icon name="spark" /></div><div><h1 className="text-[17px] font-bold tracking-tight text-slate-900">Work Board</h1><p className="text-[11px] font-medium tracking-wide text-slate-400">IDEAS INTO ACTION</p></div></div>
       <div className="hidden items-center gap-2 text-xs text-slate-500 sm:flex"><span className={`h-2 w-2 rounded-full ${loaded ? "bg-emerald-500" : "bg-amber-400"}`} /><span>{loaded ? "この端末に自動保存中" : "読み込み中"}</span></div>
     </div></header>
     <div className="mx-auto max-w-[1480px] px-4 pt-7 sm:px-7 sm:pt-10">
