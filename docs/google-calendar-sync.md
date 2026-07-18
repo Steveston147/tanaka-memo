@@ -48,6 +48,6 @@ Use the newest Vercel deployment for the pull request. Older deployment URLs rem
 
 ## Validation
 
-- Vercel Preview production build succeeded after the final documentation update.
+- Vercel Preview production build succeeded on the final PR head.
 - TypeScript and Next.js production compilation passed.
 - Actual OAuth consent and Google Calendar event creation remain dependent on configuring the Google Cloud OAuth client ID.
