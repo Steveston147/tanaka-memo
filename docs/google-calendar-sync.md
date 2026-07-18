@@ -45,3 +45,9 @@ Use the newest Vercel deployment for the pull request. Older deployment URLs rem
 
 - The header shows `Google Calendarに接続` or `Google設定待ち`.
 - The dated memo form shows the `Google Calendarへ反映` checkbox.
+
+## Validation
+
+- Vercel Preview production build succeeded on commit `93f2c5f`.
+- TypeScript and Next.js production compilation passed.
+- Actual OAuth consent and Google Calendar event creation remain dependent on configuring the Google Cloud OAuth client ID.
