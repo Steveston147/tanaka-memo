@@ -38,3 +38,10 @@ NEXT_PUBLIC_GOOGLE_CLIENT_ID=<Google OAuth Web client ID>
 ```
 
 The Google Cloud OAuth client must allow the production and Vercel preview origins used by Work Board.
+
+## Preview verification
+
+Use the newest Vercel deployment for the pull request. Older deployment URLs remain accessible and may show the pre-UI foundation build. The current UI build is identifiable by both of the following:
+
+- The header shows `Google Calendarに接続` or `Google設定待ち`.
+- The dated memo form shows the `Google Calendarへ反映` checkbox.
