@@ -3,7 +3,7 @@ export type GoogleSyncStatus = "not-synced" | "pending" | "synced" | "error";
 export type CalendarMemo = {
   title: string;
   description?: string;
-  scheduleDate: string;
+  scheduleDate?: string;
   startTime?: string;
   endTime?: string;
   allDay?: boolean;
