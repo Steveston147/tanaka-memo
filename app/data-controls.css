@@ -15,30 +15,6 @@ header.glass > div > div:last-child::before {
   color: rgb(100 116 139);
 }
 
-header.glass > div > div:first-child > div:last-child > p {
-  display: grid;
-  gap: 0.05rem;
-  font-size: 0;
-  line-height: 1.1;
-}
-
-header.glass > div > div:first-child > div:last-child > p::before {
-  content: "Ritsumeikan Study Abroad Centre";
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: 0.025em;
-  color: rgb(100 116 139);
-  text-transform: none;
-}
-
-header.glass > div > div:first-child > div:last-child > p::after {
-  content: "IDEAS INTO ACTION";
-  font-size: 0.55rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: rgb(148 163 184);
-}
-
 button[title="バックアップを書き出す"],
 button[title="現在のデータに追加・更新"],
 button[title="現在のデータを置き換える"] {
@@ -154,9 +130,5 @@ button[title="現在のデータを置き換える"] + input + span {
 
   header.glass > div > div:last-child {
     padding-top: 0;
-  }
-
-  header.glass > div > div:first-child > div:last-child > p::before {
-    font-size: 0.52rem;
   }
 }
