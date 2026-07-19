@@ -1,42 +1,134 @@
+header.glass > div > div:last-child {
+  position: relative;
+  align-items: stretch;
+  padding-top: 1.15rem;
+}
+
+header.glass > div > div:last-child::before {
+  content: "データ管理";
+  position: absolute;
+  top: 0;
+  left: 0.15rem;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: rgb(100 116 139);
+}
+
 button[title="バックアップを書き出す"],
 button[title="現在のデータに追加・更新"],
 button[title="現在のデータを置き換える"] {
-  min-height: 36px;
-  padding: 0.5rem 0.75rem;
+  min-height: 52px;
+  min-width: 138px;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 0.1rem;
+  padding: 0.45rem 0.7rem;
   white-space: nowrap;
   font-size: 0;
-  font-weight: 700;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.96);
 }
 
 button[title="バックアップを書き出す"] svg {
   display: none;
 }
 
+button[title="バックアップを書き出す"]::before {
+  content: "バックアップ保存";
+}
+
+button[title="現在のデータに追加・更新"]::before {
+  content: "バックアップ追加・更新";
+}
+
+button[title="現在のデータを置き換える"]::before {
+  content: "バックアップから全復元";
+}
+
+button[title="バックアップを書き出す"]::before,
+button[title="現在のデータに追加・更新"]::before,
+button[title="現在のデータを置き換える"]::before {
+  font-size: 0.72rem;
+  line-height: 1.1;
+  font-weight: 800;
+}
+
 button[title="バックアップを書き出す"]::after {
-  content: "バックアップを保存";
-  font-size: 0.75rem;
+  content: "現在の全データを書き出す";
 }
 
 button[title="現在のデータに追加・更新"]::after {
-  content: "データを追加・更新";
-  font-size: 0.75rem;
+  content: "現在を残して追加・更新";
 }
 
 button[title="現在のデータを置き換える"]::after {
-  content: "バックアップから全復元";
-  font-size: 0.75rem;
+  content: "現在をすべて置き換える";
 }
 
-@media (max-width: 900px) {
-  button[title="バックアップを書き出す"]::after {
+button[title="バックアップを書き出す"]::after,
+button[title="現在のデータに追加・更新"]::after,
+button[title="現在のデータを置き換える"]::after {
+  font-size: 0.61rem;
+  line-height: 1.1;
+  font-weight: 500;
+  color: rgb(100 116 139);
+}
+
+button[title="現在のデータを置き換える"]::after {
+  color: rgb(225 29 72);
+}
+
+button[title="現在のデータを置き換える"] + input + button,
+button[title="現在のデータを置き換える"] + input + span {
+  margin-left: 0.45rem;
+  align-self: center;
+}
+
+@media (max-width: 1180px) {
+  button[title="バックアップを書き出す"],
+  button[title="現在のデータに追加・更新"],
+  button[title="現在のデータを置き換える"] {
+    min-width: auto;
+    min-height: 38px;
+    justify-items: center;
+  }
+
+  button[title="バックアップを書き出す"]::before {
     content: "保存";
   }
 
-  button[title="現在のデータに追加・更新"]::after {
+  button[title="現在のデータに追加・更新"]::before {
     content: "追加・更新";
   }
 
-  button[title="現在のデータを置き換える"]::after {
+  button[title="現在のデータを置き換える"]::before {
     content: "全復元";
+  }
+
+  button[title="バックアップを書き出す"]::after,
+  button[title="現在のデータに追加・更新"]::after,
+  button[title="現在のデータを置き換える"]::after {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  header.glass > div {
+    align-items: flex-start;
+  }
+
+  header.glass > div > div:last-child {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  header.glass > div > div:last-child::before {
+    display: none;
+  }
+
+  header.glass > div > div:last-child {
+    padding-top: 0;
   }
 }
